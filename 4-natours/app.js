@@ -27,6 +27,33 @@ app.get('/api/v1/tours', (req, res) => {
     })
 });
 
+app.get('/api/v1/tours/:id', (req, res) => {
+    
+    const id = req.params.id * 1;  // convert string to number
+    const tour = tours.find(el => el.id === id)
+
+    console.log(req.params, tour);
+
+    // if (tours.length < id) {
+        
+    if(!tour) {
+        return res.status(404).json({
+            message: "Invalid ID",
+            status: "Fail"
+        })
+    }
+
+    
+    res.status(200).json({
+        message: "Success",
+        results: tours.length,
+        data: {
+            tours: tour
+        }
+    })
+
+});
+
 app.post('/api/v1/tours', (req, res) => {
     console.log(req.body);
 
